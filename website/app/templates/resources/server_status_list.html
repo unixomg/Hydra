@@ -1,0 +1,43 @@
+{% extends "public/layout.html" %}
+
+
+
+{% block sidebar %}
+    {% include "public/cmdb_left.html" %}
+{% endblock %}
+
+
+{% block custom_css %}
+    <style>
+        .btn_mod{font-size: 14px;padding:2px 6px;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <table class="table table-striped" style="width:600px;">
+        <caption>
+            <a class="btn btn-default" href="/resources/status/add/" role="button">添加status</a>
+
+        </caption>
+        <tr>
+            <th>#</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        {% for status in statuses %}
+            <tr>
+
+                <td>{{ loop.index }}</td>
+                <td>{{ status.name }}</td>
+                <td>
+                    <a href="/resources/status/modify/{{ status.id }}" class="btn btn-primary btn_mod">修改</a>
+                    <a href="{{ status.id }}" class="btn btn-danger btn_mod">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+

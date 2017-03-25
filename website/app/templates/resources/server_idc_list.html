@@ -1,0 +1,88 @@
+{% extends "public/layout.html" %}
+
+
+
+{% block sidebar %}
+    {% include "public/cmdb_left.html" %}
+{% endblock %}
+
+
+{% block custom_css %}
+    <style>
+        .btn_mod{font-size: 14px;padding:2px 6px;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <table class="table table-striped" style="width:83%;">
+        <caption>
+            <a class="btn btn-default" href="/resources/idc/add/" role="button">添加IDC</a>
+
+        </caption>
+        <tr>
+            <th>#</th>
+            <th>简称</th>
+            <th>idc名称</th>
+            <th>详细地址</th>
+            <th>客服电话</th>
+            <th>邮件地址</th>
+            <th>IDC接口人</th>
+            <th>接口人电话</th>
+            <th>实际机柜数</th>
+            <th>合同机柜数</th>
+            <th>操作</th>
+        </tr>
+        {% for idc in idcs %}
+            
+            <tr>
+
+                <td>{{ loop.index }}</td>
+                <td>{{ idc.name }}</td>
+                <td>{{ idc.idc_name }}</td>
+                <td>{{ idc.address }}</td>
+                <td>{{ idc.phone }}</td>
+                <td>{{ idc.email }}</td>
+                <td>{{ idc.user_interface }}</td>
+                <td>{{ idc.user_phone }}</td>
+                <td>{{ idc.rel_cabinet_num }}</td>
+                <td>{{ idc.pact_cabinet_num }}</td>
+                <td>
+                    <a href="/resources/idc/modify/{{ idc.id }}" class="btn btn-primary btn_mod">修改</a>
+                    <a href="#" data="{{ idc.id }}" class="btn btn-danger btn_mod btn_delete">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block js %}
+    <script>
+        $(".btn_delete").click(function(){
+            obj_idc = $(this);
+            idc_id = obj_idc.attr('data');
+            console.log($(this).attr('data'));
+            swal({title: "确定删除吗?",
+                text: "即将删除这条IDC信息",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function(){
+
+                $.post("/resources/idc/delete/", {id:idc_id}, function(data){
+                    if(data == "1"){
+                        obj_idc.parents("tr").remove();
+                        swal("删除成功!", "", "success");
+                    }else{
+                        swal("删除失败!", "", "error");
+                    }
+                });
+
+            });
+            return false
+        });
+
+    </script>
+{% endblock %}
+

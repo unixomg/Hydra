@@ -1,0 +1,23 @@
+{% include "public/layout.html" %}
+
+
+<script>
+    var next_url = "{{ next_url }}";
+    if(next_url==""){
+        next_url="/"
+    }
+    $(function(){
+        swal({
+                title: "操作成功",
+                text: "",
+                type: "success"
+            },
+            function(){
+                setTimeout(function(){
+                    window.location.href = next_url;
+                }, 150)
+
+            });
+    });
+</script>
+

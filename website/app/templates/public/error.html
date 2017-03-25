@@ -1,0 +1,20 @@
+{% include "public/layout.html" %}
+
+
+<script>
+    var next_url = "{{ next_url }}";
+    var text = "{{ next_url }}"
+    $(function(){
+        swal({
+                title: "操作失败",
+                text: text,
+                type: "error"
+            },
+            function(){
+                setTimeout(function(){
+                    window.location.href = next_url;
+                }, 150)
+            });
+    });
+</script>
+
